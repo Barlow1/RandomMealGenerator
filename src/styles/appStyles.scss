@@ -1,0 +1,37 @@
+@import 'style';
+$theme-font:    verdana, sans-serif;
+
+body {
+  font: $theme-font;
+  background-color: $themeColor-Light;
+  h1, h2 {
+    color: $themeColor-Dark
+  }
+}
+.navbar {
+  background-color: #b68d4c;
+}
+.body-container {
+  padding-top: 60px;
+}
+.card-image {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: cover;
+  padding: 0;
+}
+.two-column-list {
+  padding: 0;
+}
+.meal-card {
+  max-height: 80vh;
+}
+.top-info {
+  padding-bottom: 20px;
+}
+.align-center {
+  margin-top: 10px;
+}
+.card {
+  min-width: 80vw;
+}
