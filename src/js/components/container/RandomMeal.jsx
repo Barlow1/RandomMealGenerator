@@ -26,6 +26,7 @@ class RandomMeal extends Component {
         this.callbackArea = this.callbackArea.bind(this);
         this.callbackNav = this.callbackNav.bind(this);
         this.getRandomMeal = this.getRandomMeal.bind(this);
+        this.callbackHome = this.callbackHome.bind(this);
     }
 
     componentWillMount() {
@@ -96,6 +97,14 @@ class RandomMeal extends Component {
         callback()
     };
 
+    callbackHome() {
+        let callback = async () => {
+            await this.setState({ area: "None", meals: [], showDirections: true, search: "" });
+            await this.getRandomMeal();
+        };
+        callback()
+    };
+
 
     render() {
         const { meals } = this.state;
@@ -105,7 +114,7 @@ class RandomMeal extends Component {
             <header>
                 <div className="container">
                     <div className="navbar navbar-static-top" id="nav-bar">
-                        <NavBar search={this.state.search} callback={this.callbackNav} />
+                        <NavBar search={this.state.search} callbackHome={this.callbackHome} callback={this.callbackNav} />
                     </div>
                 </div>
             </header>
@@ -116,23 +125,29 @@ class RandomMeal extends Component {
                             <div className="col-md-4 align-self-center">
                                 <h1>Random meal:</h1>
                             </div>
-                            <div className="col-md-4 align-self-center">
-                                <AreaSelector callback={this.callbackArea} area={this.state.area} />
-                            </div>
-                            <div className="col-md-4 align-self-center">
+                            {this.state.search === "" &&
+                                <div className="col-md-4 align-self-center">
+                                    <AreaSelector callback={this.callbackArea} area={this.state.area} />
+                                </div>}
+                            {this.state.search === "" ? <div className="col-md-4 align-self-center">
                                 <button type="button" className="btn btn-primary"
                                     onClick={this.getRandomMeal}>Generate
                                     a new one
                                     </button>
 
-                            </div>
+                            </div> : <button
+                                type="button" className="btn btn-secondary"
+                                onClick={this.callbackHome}>
+                                    ◀ Back
+                                    </button>
+                            }
                         </div>
                         <div className="row meal-card justify-content-center">
                             {meals.length ? <ul>
                                 {
                                     meals.map(
                                         meal =>
-                                            <Card className="card w-75" key={meal.idMeal}>
+                                            <Card className="card w-75 mb-4" key={meal.idMeal}>
                                                 <Card.Img className="card-image col-md-12" variant="top"
                                                     src={meal.strMealThumb} />
                                                 <Card.Header>
